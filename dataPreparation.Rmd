@@ -1,5 +1,5 @@
 ---
-title: "DataPreparation"
+title: "Data Preparation for Data Visualization Coursework"
 knit: (function(input_file, encoding) {
   out_dir <- 'docs';
   rmarkdown::render(input_file,
@@ -9,36 +9,51 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Install and Load Packages
 
 ```{r}
-# Install and load require packages
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load("dplyr", "readr", "ggplot2", "haven", "forcats", "RColorBrewer")
 
 # avoid character variables read as factors
 options(stringsAsFactors = FALSE)
 source("./R/labelOcc.R")
+```
 
-# Read original data from Montt, C., & Maas, I. (2015). The openness of 
-# Britain during industrialisation. Determinants of career success 
-# of British men born between 1780 and 1880. Research in Social 
-# Stratification and Mobility, 42, 123-135.
+## Data Source (extracted and slighlty modified from Montt, C., & Maas, I. (2015))
 
+I will used the data from the Longitudinal Study of Residential Histories (Pooley & Turnbull, 1996) -LRSH from now on-. This dataset consists of a large sample of high-quality longitudinal data on individual residential histories from the eighteenth century to the twentieth century in Britain. Although the main purpose behind the data collection was to gather information on the history of individuals’ residential moves, the occupation of individuals was recorded before and after each residential move, resulting in between 1 and 67 occupations per person, and 41,205 occupational measurements for 6229 men born in Britain between 1780 and 1880 who were in the labour market between 1790 and 1950.
+
+To be able to distinguish how the occupational status of an individual changed over his career, to each occupation a HISCAM status score was assigned (Van Leeuwen, M. H. D., Maas, I., & Miles, A., 2004). HISCAM scores are connected to the 1600 occupational categories in the historical occupational classification system HISCO (Van Leeuwen, Maas, & Miles, 2004). We therefore first grouped the different HISCO categories into the occupational classes available in the LRSH data. Then, the average HISCAM score for each occupational class of the LRSH was calculated. 
+
+The resulting HISCAM averages for each occupation can be seen in the table below. They are ordered as they appear in the visualization made in Litvis. To simplify, and because comapred to the other occupations they are quite distinctive, from the original data I excluded observations corresponding to occupations of the Army or Navy, and Domestic Service.
+
+| Occupation                       | HISCAM  | Area        |
+| -------------------------------- | ------- | ----------- |
+| Professional / higher managerial | 89.6    | Industry    |
+| Intermediate managerial          | 75.6    | Industry    |
+| Skilled non manual               | 67.7    | Industry    |
+| Skilled manual                   | 55.4    | Industry    |
+| Semi-skilled                     | 48.2    | Industry    |
+| Unskilled                        | 45.3    | Industry    |
+| Landed farmer                    | 49.3    | Agriculture |
+| Skilled/semi skilled agriculture | 40.2    | Agriculture |
+| Agricultural labourer            | 37.4    | Agriculture |
+
+
+Next, I'll read the original data used in Montt, C., & Maas, I. (2015), 
+
+```{r}
 data <- read_dta("./data/complete_app_pooleylong.dta")
 
 data_selection <- data %>% select(namenumber,
                              yearbi,
                              codefa,
                              hiscam_f,
-                             occ_ba, # occ before or after (0,1) revise
+                             occ_ba, 
                              placework,
                              urban,
                              migra,
@@ -51,15 +66,20 @@ data_selection <- data %>% select(namenumber,
                              children
                              )
 
-# write.csv(data_selection, "careers.csv")
+# write.csv(data_selection, "./data/careers.csv")
 
-# --------------------------------------------------------------------------
-# data transformation for "changes of occupational structure over time"
-#---------------------------------------------------------------------------
+```
 
+
+## Data Transformations
+
+### Data transformations for "changes in occupational structure over time" visualization
+
+```{r}
 data_occs <- data_selection %>% dplyr::select(codefa, educa, occ, 
                                               hiscam, yearocc, yearbi)
 
+# twenty years becomes the x axis in the plot
 data_occs <- data_occs %>%
   mutate(twenty_years=case_when(
     yearocc %in% 1791:1804 ~ "1791", # see graph 1791:1804 instead of 1791:1810 the decline is steeper
@@ -74,7 +94,7 @@ data_occs <- data_occs %>%
 
 data_occs <- data_occs %>%
   mutate(ten_years=case_when(
-    yearocc %in% 1791:1800 ~ "1791", # see graph 1791:1804 instead of 1791:1810 the decline is steeper
+    yearocc %in% 1791:1800 ~ "1791", 
     yearocc %in% 1801:1810 ~ "1801",
     yearocc %in% 1811:1820 ~ "1811",
     yearocc %in% 1821:1830 ~ "1821",
@@ -100,8 +120,9 @@ data_occs <- data_occs %>% filter(occ >= 1 & occ <= 9)
 # transform occ to factor so we can recode it
 data_occs$occ <- as.factor(data_occs$occ)
 
-#recode occupation sons
+# recode occupation sons
 data_occs <- labelOcc(data_occs, "occ", "occ")
+
 
 
 data_occs <- data_occs %>% dplyr::select(twenty_years, occ) %>% 
@@ -112,6 +133,7 @@ data_occs <- data_occs %>% group_by(twenty_years, occ) %>%
                 mutate(n_occs = n()) %>% distinct() %>% 
                  arrange(twenty_years, occ) 
 
+# Calculate the proportion of each occupation for each time period
 data_occs <- data_occs %>% group_by(twenty_years, occ) %>% 
         mutate(prop = (n_occs/total_obs))
 
@@ -123,16 +145,12 @@ data_occs$twenty_years <- as.numeric(data_occs$twenty_years)
 
 data_occs$occ <- as.factor(data_occs$occ) 
 
-#data_occs$prop <- round(data_occs$prop, 2)
-
 write_csv(data_occs, "./data/occupations_by_year.csv")
 ```
 
-## Including Plots
+#### Data Visualization in R
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
+```{r}
 # Making the same graph with ggplot2
 myColors <- c(brewer.pal(9,"Blues"), brewer.pal(6,"Reds"))[c(4:9,13:15)]
 names(myColors) <- levels(data_occs$occ)
@@ -144,4 +162,92 @@ p_scale <- p1 + colScale
 p_scale
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### Data Transformations for "changes in occupational attainment over cohorts"
+
+
+```{r}
+careers_cohorts <- data_selection %>% filter(agesmov < 60) %>% 
+            mutate(age_int = case_when(agesmov < 20 ~ "< 20",
+                                      (agesmov >= 20 & agesmov < 30)  ~ "20 - 29",
+                                      (agesmov >= 30 & agesmov < 40)  ~ "30 - 39",
+                                      (agesmov >= 40 & agesmov < 50)  ~ "40 - 49",
+                                      (agesmov >= 50 & agesmov < 60)  ~ "50 - 59"))
+
+careers_cohorts <- careers_cohorts %>% filter(codefa >= 1 & codefa <= 9)
+careers_cohorts$codefa <- as.factor(careers_cohorts$codefa)
+#recode occupation father
+careers_cohorts <- labelOcc(careers_cohorts, "codefa", "rcodefa")
+
+
+# Don´t know why case_when didnt work, had to use contidional mutating instead
+careers_cohorts <- careers_cohorts %>% 
+        mutate(cohort = ifelse(yearbi >= 1780 & yearbi <= 1804, "1780-1804", 
+                               ifelse(yearbi >= 1805 & yearbi <= 1829, "1805-1829",
+                                      ifelse(yearbi >= 1830 & yearbi <= 1854, "1830-1854",
+                                             ifelse(yearbi >= 1855 & yearbi <= 1880, "1855-1880", NA)))))
+
+
+careers_cohorts$age_int <- as.numeric(as.factor(careers_cohorts$age_int))
+
+# Calculate average hiscma per age group by person
+careers_cohorts <- careers_cohorts %>% dplyr::group_by(namenumber, age_int) %>% 
+                        mutate(hiscam_age = mean(hiscam, na.rm = TRUE))
+
+
+careers_cohorts <- careers_cohorts %>% 
+                        dplyr::select(namenumber, codefa, rcodefa, 
+                                      age_int, cohort, hiscam_age)
+
+careers_cohorts_av <- careers_cohorts %>% group_by(cohort, age_int) %>% 
+        summarize(avHcoho = mean(hiscam_age, na.rm = TRUE))
+
+write_csv(careers_cohorts_av, "./data/careers_cohorts.csv")
+
+```
+
+#### Data Visualization in R
+
+```{r}
+ggplot(careers_cohorts_av, aes(x = age_int, y = avHcoho, 
+                    group = factor(cohort),
+                    color = factor(cohort))) + 
+        stat_smooth(se= FALSE) 
+```
+
+
+### Data transformation for "changes of effect of father's ocupation overs 
+ son's career status"
+ 
+```{r}
+careers_cohof <- careers_cohorts %>% group_by(cohort, rcodefa, age_int) %>% 
+        summarize(avHcohoF = mean(hiscam_age, na.rm = TRUE))
+
+write_csv(careers_cohof, "./data/careers_cohorts_father.csv")
+
+```
+
+### Data visualization in R
+
+```{r}
+
+ggplot(careers_cohof, aes(x = age_int, y = avHcohoF, 
+                    group = factor(rcodefa),
+                    color = factor(rcodefa))) + 
+        stat_smooth(se= FALSE) + 
+        facet_grid(cohort ~ rcodefa)
+
+ggplot(careers_cohof, aes(x = age_int, y = avHcohoF, 
+                    group = factor(rcodefa),
+                    color = factor(rcodefa))) + 
+        stat_smooth(se= FALSE) + 
+        facet_grid(rcodefa ~ cohort)
+
+ggplot(careers_cohof, aes(x = age_int, y = avHcohoF, 
+                    group = factor(cohort),
+                    color = factor(cohort))) + 
+        stat_smooth(se= FALSE) + 
+        facet_wrap(~rcodefa)
+
+```
+
