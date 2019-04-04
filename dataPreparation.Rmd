@@ -1,0 +1,151 @@
+---
+title: "DataPreparation"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+  encoding=encoding,
+  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+output:
+  rmdformats::readthedown:
+    highlight: kate
+    toc_depth: 4
+    css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+# Install and load require packages
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load("dplyr", "readr", "ggplot2", "haven", "forcats", "RColorBrewer")
+
+# avoid character variables read as factors
+options(stringsAsFactors = FALSE)
+source("./R/labelOcc.R")
+
+# Read original data from Montt, C., & Maas, I. (2015). The openness of 
+# Britain during industrialisation. Determinants of career success 
+# of British men born between 1780 and 1880. Research in Social 
+# Stratification and Mobility, 42, 123-135.
+
+data <- read_dta("./data/complete_app_pooleylong.dta")
+
+data_selection <- data %>% select(namenumber,
+                             yearbi,
+                             codefa,
+                             hiscam_f,
+                             occ_ba, # occ before or after (0,1) revise
+                             placework,
+                             urban,
+                             migra,
+                             occ:agesmov,
+                             educa,
+                             yearbe,
+                             wexp,
+                             unem,
+                             mas,
+                             children
+                             )
+
+# write.csv(data_selection, "careers.csv")
+
+# --------------------------------------------------------------------------
+# data transformation for "changes of occupational structure over time"
+#---------------------------------------------------------------------------
+
+data_occs <- data_selection %>% dplyr::select(codefa, educa, occ, 
+                                              hiscam, yearocc, yearbi)
+
+data_occs <- data_occs %>%
+  mutate(twenty_years=case_when(
+    yearocc %in% 1791:1804 ~ "1791", # see graph 1791:1804 instead of 1791:1810 the decline is steeper
+    yearocc %in% 1805:1830 ~ "1805",
+    yearocc %in% 1831:1850 ~ "1831",
+    yearocc %in% 1851:1870 ~ "1851",
+    yearocc %in% 1871:1890 ~ "1871",
+    yearocc %in% 1891:1910 ~ "1891",
+    yearocc %in% 1911:1930 ~ "1911",
+    yearocc %in% 1931:1955 ~ "1931"
+  )) %>% na.omit()
+
+data_occs <- data_occs %>%
+  mutate(ten_years=case_when(
+    yearocc %in% 1791:1800 ~ "1791", # see graph 1791:1804 instead of 1791:1810 the decline is steeper
+    yearocc %in% 1801:1810 ~ "1801",
+    yearocc %in% 1811:1820 ~ "1811",
+    yearocc %in% 1821:1830 ~ "1821",
+    yearocc %in% 1831:1840 ~ "1831",
+    yearocc %in% 1841:1850 ~ "1841",
+    yearocc %in% 1851:1860 ~ "1851",
+    yearocc %in% 1861:1870 ~ "1861",
+    yearocc %in% 1871:1880 ~ "1871",
+    yearocc %in% 1881:1890 ~ "1881",
+    yearocc %in% 1891:1900 ~ "1891",
+    yearocc %in% 1901:1910 ~ "1901",
+    yearocc %in% 1911:1920 ~ "1911",
+    yearocc %in% 1921:1930 ~ "1921",
+    yearocc %in% 1931:1940 ~ "1931" 
+# didnt used 10 years or less cause there is no data for every occupation 
+# for evey year, which messes up the visualization. Besides I'm interested
+# in genereal trends, not the specific variations between years
+  )) %>% na.omit()
+
+# filter out domestic service and army
+data_occs <- data_occs %>% filter(occ >= 1 & occ <= 9)
+
+# transform occ to factor so we can recode it
+data_occs$occ <- as.factor(data_occs$occ)
+
+#recode occupation sons
+data_occs <- labelOcc(data_occs, "occ", "occ")
+
+
+data_occs <- data_occs %>% dplyr::select(twenty_years, occ) %>% 
+                   group_by(twenty_years) %>%
+                     mutate(total_obs = n()) 
+
+data_occs <- data_occs %>% group_by(twenty_years, occ) %>% 
+                mutate(n_occs = n()) %>% distinct() %>% 
+                 arrange(twenty_years, occ) 
+
+data_occs <- data_occs %>% group_by(twenty_years, occ) %>% 
+        mutate(prop = (n_occs/total_obs))
+
+
+# checking calculation is correct should give 1 for each time period
+data_occs %>% group_by(twenty_years) %>% summarize(tot = sum(prop))
+
+data_occs$twenty_years <- as.numeric(data_occs$twenty_years)
+
+data_occs$occ <- as.factor(data_occs$occ) 
+
+#data_occs$prop <- round(data_occs$prop, 2)
+
+write_csv(data_occs, "./data/occupations_by_year.csv")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+# Making the same graph with ggplot2
+myColors <- c(brewer.pal(9,"Blues"), brewer.pal(6,"Reds"))[c(4:9,13:15)]
+names(myColors) <- levels(data_occs$occ)
+colScale <- scale_fill_manual(name = "occ", values = myColors)
+
+p1 <- ggplot(data_occs, aes(x=twenty_years, y=prop, fill=occ)) + 
+    geom_area(alpha=0.6 , size=1, colour="black") 
+p_scale <- p1 + colScale
+p_scale
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
