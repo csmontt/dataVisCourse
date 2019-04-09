@@ -96,7 +96,7 @@ transOrd =
                         "codefaOrder"
 
 occData =
-   dataFromUrl "https://raw.githubusercontent.com/csmontt/data-visualization/master/courseworkData.csv"
+   dataFromUrl "https://raw.githubusercontent.com/csmontt/dataVisCourse/master/data/courseworkData.csv"
 
 ```
 
