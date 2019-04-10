@@ -474,17 +474,18 @@ In this sense one of the limitations of my data vis, is that it does not allow t
 
 Another issue, is that I was unable to add a layer with the actual map of the UK in the background, this would give more context and make it easier to identifify the main cities to people who are not familiar with its geogrpahy.
 
-To improve my data vis, I could include the option to disaggregate the data through user interaction. I would also need to create an specific chart for visualizing the more complex data.
+To improve my data vis, I could include the option to disaggregate the data through user interaction. I would also need to create an specific chart for visualizing the more complex data. Furthermore, I could have used median instead of mean for summarizing the data, as is less prone to be affected by outliers.
 
 Another route I could take, would be to enhance the ability to compare between regions. As one of the main problems with my vis, is that it does not allow to compare different regions at the same time. Every time you draw a new selection in the map you loose your previous selection. An easy way to solve this issue would just repeat the same visualization next to the previous one. By filtering a region in one of them and another in the next one, comparison between two regions would be possible. Another option, would be to create the regions to select before hand, and make small multiples of the existing charts but for each region.
 
-In conclusion, the developed data visualization allows to answer the research questions, but it could still be improve the ability to explore the complete dataset, not only the aggregated results. Also, improvements with respect to region comparison are needed. 
+In conclusion, the developed data visualization allows to answer the research questions, but it could still be improve the ability to explore the complete dataset, not only the aggregated results. Also, improvements with respect to region comparison are needed.
+
+
 
 {|validation)}
 
 {(references|}
 
-**Stone, M.** (2006) Choosing Colors for Data Visualization, Perceptual Edge.
 
 **Meulemans, W., Dykes, J., Slingsby, A., Turkay, C. & Wood, J.** (2017). Small
 Multiples with Gaps. IEEE Transactions on Visualization and Computer Graphics, 23(1), pp.
@@ -499,9 +500,11 @@ Multiples with Gaps. IEEE Transactions on Visualization and Computer Graphics, 2
 **Sarikaya, A., Correll, M., Bartram, L., Tory, M. and Fisher, D.** (2019) What do we talk about when we talk about
 dashboards? IEEE Transactions on Visualization and Computer Graphics, 25(1) pp. 682-692.
 
+**Stone, M.** (2006) Choosing Colors for Data Visualization, Perceptual Edge.
+
 **Tufte, E. R.** (2001). The visual display of quantitative information (Vol. 2). Cheshire, CT: Graphics press.
 
-**Van Leeuwen, M. H. D., Maas, I., & Miles, A.** (2004). Creating a historical linternational standard classification of occupations: An exercise in multinational interdisciplinary cooperation. Historical Methods: A Journal of Quantitative and Interdisciplinary History, 37, 186–197.
+**Van Leeuwen, M. H. D., Maas, I., & Miles, A.** (2004). Creating a historical International standard classification of occupations: An exercise in multinational interdisciplinary cooperation. Historical Methods: A Journal of Quantitative and Interdisciplinary History, 37, 186–197.
 
 **Yau, N. (2011).** Visualize this: the FlowingData guide to design, visualization, and statistics. John Wiley & Sons.
 

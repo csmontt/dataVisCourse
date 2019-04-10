@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>courseworkPG</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+      
+      
+      
+
+      
+      
+      
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5.3.2/build/vega.min.js "></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.2/build/vega-lite.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@4.0.0/build/vega-embed.min.js"></script>
+      
+      
+
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   " id="litvis">
+      <style>
+/* narrative schema: D:\OneDrive\dataVisCourse\narrative-schemas\courseworkPG.yml */
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+legend {
+  font-size:0.9em; font-style: italic;
+}
+
+.questions fieldset {
+  background: #f3f3f3;
+}
+
+.questions {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.annotation {
+  font-size: 1.2em;
+  font-family: caveat, cursive !important;
+}
+</style><style>@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300|Roboto+Slab|Fjalla+One|Caveat");
+#litvis {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 11pt;
+}
+#litvis h1,
+#litvis h2,
+#litvis h3,
+#litvis h4,
+#litvis h5,
+#litvis h6 {
+  font-family: "Fjalla One", sans-serif;
+}
+#litvis h2 {
+  font-size: 19.8pt;
+}
+#litvis h3 {
+  font-size: 13.2pt;
+}
+#litvis h4,
+#litvis h5,
+#litvis h6 {
+  font-size: 11pt;
+}
+#litvis blockquote {
+  font-family: "Roboto Slab", serif;
+  font-size: 12.1pt;
+  background-color: #f6f6f6;
+  margin-right: 2em;
+}
+#litvis blockquote h1,
+#litvis blockquote h2,
+#litvis blockquote h3,
+#litvis blockquote h4,
+#litvis blockquote h5,
+#litvis blockquote h6 {
+  font-family: "Roboto Slab", sans-serif;
+}
+#litvis code,
+#litvis pre {
+  background-color: rgba(255, 255, 255, 0);
+}
+#litvis pre {
+  border: solid 1px #ccc;
+  border-radius: 8px;
+}
+#litvis div[data-role="litvisOutput"] > span {
+  font-family: iosevka, monospace;
+  font-weight: bold;
+  font-size: 17.6pt;
+  display: block;
+  margin-bottom: 0.75em;
+  border-style: none none none solid;
+  border-width: 1px;
+  border-color: #ccc;
+  padding-left: 0.5em;
+}
+</style>
+<h1 class="mume-header" id="postgraduate-coursework-template">Postgraduate Coursework Template</h1>
+
+<p>Some background first. I am interested in using visualization for exploring the data I used in a previous master´s thesis which can be found <a href="https://0-www-sciencedirect-com.wam.city.ac.uk/science/article/pii/S0276562415000694">here</a>. The basic idea behind it is the following: Industrialization had a profound effect on british society, triggering a shift in its occupational structure due to the increasing demand of more technical manual and non manual labour. This led to more social mobility, and ultimately, to a decrease in the effect of one´s social background on an individual´s occupational achievement. Meaning that british society become more open.</p>
+<p>The Data I used correspond to Data from the Longitudinal Study of Residential Histories (Pooley &amp; Turnbull, 1996) -LRSH from now on-. This dataset consists of a large sample of high-quality longitudinal data on individual residential histories from the eighteenth century to the twentieth century in Britain. Although the main purpose behind the data collection was to gather information on the history of individuals’ residential moves, the occupation of individuals was recorded before and after each residential move, resulting in between 1 and 67 occupations per person, and 41,205 occupational measurements for 6229 men born in Britain between 1780 and 1880 who were in the labour market between 1790 and 1950.</p>
+<p>I filtered some observations from this data. First, I dropped occupational measurements corresponding to Domestic Service and Army occupations. I did this because I wanted to simplify the analysis and also, because there are very few observations for these categories. I also filtered out observations that were not from the UK (e.g. people who moved in from other countries). Occupational measurements of people older than 60 were also filtered out, as it is more likely that, surviving to that age and still working, would be a highly selective group, and thererofe any generalization from that data would be particularly biased. The final dataset consist of 35813 occupational measurements of 5967 men and is available from <a href="https://github.com/csmontt/dataVisCourse">here</a>.</p>
+<p>To be able to distinguish how the occupational status of an individual changed over his career, to each occupation a HISCAM status score was assigned (Van Leeuwen, M. H. D., Maas, I., &amp; Miles, A., 2004).</p>
+<p>The resulting HISCAM averages for each occupation can be seen in the table below. They are ordered as they appear in the visualization made in Litvis.</p>
+<table>
+<thead>
+<tr>
+<th>Occupation</th>
+<th>HISCAM</th>
+<th>Area</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Professional / higher managerial</td>
+<td>89.6</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Intermediate managerial</td>
+<td>75.6</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Skilled non manual</td>
+<td>67.7</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Skilled manual</td>
+<td>55.4</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Semi-skilled</td>
+<td>48.2</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Unskilled</td>
+<td>45.3</td>
+<td>Industry</td>
+</tr>
+<tr>
+<td>Landed farmer</td>
+<td>49.3</td>
+<td>Agriculture</td>
+</tr>
+<tr>
+<td>Skilled/semi skilled agriculture</td>
+<td>40.2</td>
+<td>Agriculture</td>
+</tr>
+<tr>
+<td>Agricultural labourer</td>
+<td>37.4</td>
+<td>Agriculture</td>
+</tr>
+</tbody>
+</table>
+<p>I would like to explore the same questions from the article were this data came from, but using visualization. These questions are:</p>
+<div class="questions" ns-role="label" ns-label-name="questions" ns-label-kind="paired"><span class="annotation" ns-role="label-child">What are the research questions that your data visualization will help you to answer?</span><fieldset ns-role="label-child"><legend ns-role="label-child">Research Questions</legend>
+<ul>
+<li>Did men have more successful careers in Britain as the country became industrialised?</li>
+<li>Did British society became more open during industrialisation?</li>
+</ul>
+</fieldset></div>
+<div class="visualization" ns-role="label" ns-label-name="visualization" ns-label-kind="paired"><h2 ns-role="label-child">The Visualization</h2><span class="annotation" ns-role="label-child">Insert your visualization(s) here.</span>
+<div data-role="litvisOutput" style="display: inline;"><p interactive="true" style="display: inline-block" class="vega-lite"><span style="display: none">{"$schema":"https://vega.github.io/schema/vega-lite/v3.json","data":{"url":"https://raw.githubusercontent.com/csmontt/dataVisCourse/master/data/courseworkData.csv"},"config":{"view":{"stroke":""},"title":{"anchor":"start"},"axis":{"ticks":false,"domain":false}},"transform":[{"calculate":"if(datum.occ == 'Professional / Higher managerial', 8,\n                         if(datum.occ == 'Intermediate managerial', 7,\n                          if(datum.occ == 'Skilled non manual', 6,\n                           if(datum.occ == 'Skilled manual', 5,\n                            if(datum.occ == 'Semi-skilled', 4,\n                             if(datum.occ == 'Unskilled', 3,\n                              if(datum.occ == 'Landed farmer', 2,\n                                if(datum.occ == 'Skilled/semi skilled agriculture', 1, 0))))))))","as":"occOrder"}],"vconcat":[{"hconcat":[{"width":240,"height":315,"selection":{"brush":{"type":"interval"}},"mark":{"type":"circle","size":2,"opacity":0.5},"encoding":{"x":{"field":"lon","type":"quantitative","scale":{"domain":[-8,2]},"axis":{"grid":false,"title":"","values":[],"ticks":false}},"y":{"field":"lat","type":"quantitative","scale":{"domain":[49,61]},"axis":{"grid":false,"title":"","values":[],"ticks":false}},"color":{"condition":{"selection":"brush","field":"occ","type":"nominal","scale":{"domain":["Agricultural labourer","Skilled/semi skilled agriculture","Landed farmer","Unskilled","Semi-skilled","Skilled manual","Skilled non manual","Intermediate managerial","Professional / Higher managerial"],"range":["#A50F15","#DE2D26","#FB6A4A","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B"]},"legend":null},"value":"lightgrey"}},"title":"UK's occupational map (brush a selection)"},{"vconcat":[{"width":330,"height":110,"mark":"bar","encoding":{"y":{"type":"quantitative","aggregate":"count","stack":"normalize","axis":{"title":"","titlePadding":23}},"x":{"field":"cohort","type":"ordinal","axis":{"title":"","grid":false,"values":[]}},"color":{"field":"occ","type":"nominal","scale":{"domain":["Agricultural labourer","Skilled/semi skilled agriculture","Landed farmer","Unskilled","Semi-skilled","Skilled manual","Skilled non manual","Intermediate managerial","Professional / Higher managerial"],"range":["#A50F15","#DE2D26","#FB6A4A","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B"]},"legend":null},"order":{"field":"occOrder","type":"quantitative"}},"transform":[{"filter":{"selection":"brush"}}],"title":"Proportion of occupations over cohorts"},{"width":330,"height":115,"mark":"bar","encoding":{"y":{"type":"quantitative","aggregate":"count","axis":{"title":""}},"x":{"field":"cohort","type":"ordinal","axis":{"title":"","grid":false,"labelAngle":300}},"color":{"field":"occ","type":"nominal","scale":{"domain":["Agricultural labourer","Skilled/semi skilled agriculture","Landed farmer","Unskilled","Semi-skilled","Skilled manual","Skilled non manual","Intermediate managerial","Professional / Higher managerial"],"range":["#A50F15","#DE2D26","#FB6A4A","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B"]},"legend":null},"order":{"field":"occOrder","type":"quantitative"}},"transform":[{"filter":{"selection":"brush"}}],"title":"Occupational measurements over cohorts"}]},{"data":{"url":"https://raw.githubusercontent.com/csmontt/dataVisCourse/master/data/courseworkData.csv"},"transform":[{"calculate":"if(datum.occ == 'Professional / Higher managerial', 8,\n                         if(datum.occ == 'Intermediate managerial', 7,\n                          if(datum.occ == 'Skilled non manual', 6,\n                           if(datum.occ == 'Skilled manual', 5,\n                            if(datum.occ == 'Semi-skilled', 4,\n                             if(datum.occ == 'Unskilled', 3,\n                              if(datum.occ == 'Landed farmer', 2,\n                                if(datum.occ == 'Skilled/semi skilled agriculture', 1, 0))))))))","as":"occOrder"}],"encoding":{"y":{"field":"occ","type":"nominal","axis":{"title":"","domain":false,"ticks":false},"scale":{"domain":["Professional / Higher managerial","Intermediate managerial","Skilled non manual","Skilled manual","Semi-skilled","Unskilled","Landed farmer","Skilled/semi skilled agriculture","Agricultural labourer"]}},"color":{"field":"occ","type":"nominal","scale":{"domain":["1855-1880","1830-1854","1805-1829","1780-1804"],"range":["#014636","#3690C0","#A6BDDB","#D0D1E6"]},"legend":null}},"mark":{"type":"circle","size":120,"x":-155},"config":{"view":{"stroke":""}}}]},{"hconcat":[{"width":680,"height":100,"mark":{"type":"line","interpolate":"monotone"},"encoding":{"x":{"field":"age_int","type":"ordinal","axis":{"grid":false,"title":"Age","titleFontSize":7,"labelAngle":300}},"y":{"field":"avHcoho","type":"quantitative","scale":{"zero":false},"axis":{"title":""}},"color":{"field":"cohort","type":"nominal","legend":null,"scale":{"domain":["1855-1880","1830-1854","1805-1829","1780-1804"],"range":["#014636","#3690C0","#A6BDDB","#D0D1E6"]}}},"transform":[{"filter":{"selection":"brush"}},{"filter":{"selection":"legendSel"}},{"window":[{"as":"avHcoho","op":"mean","field":"hiscam_age"}],"frame":[null,null],"groupby":["cohort","age_int"]}],"title":"Differences in occupational status (average HISCAM) over the life course between cohorts"},{"selection":{"legendSel":{"type":"multi","encodings":["color"]}},"encoding":{"y":{"field":"cohort","type":"nominal","axis":{"title":"","domain":false,"ticks":false},"scale":{"domain":["1855-1880","1830-1854","1805-1829","1780-1804"]}},"color":{"condition":{"selection":"legendSel","field":"cohort","type":"nominal","scale":{"domain":["Agricultural labourer","Skilled/semi skilled agriculture","Landed farmer","Unskilled","Semi-skilled","Skilled manual","Skilled non manual","Intermediate managerial","Professional / Higher managerial"],"range":["#A50F15","#DE2D26","#FB6A4A","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C","#08306B"]},"legend":null},"value":"lightgrey"}},"mark":{"type":"square","size":120,"opacity":1}}]},{"width":60,"height":70,"mark":{"type":"line","interpolate":"monotone"},"encoding":{"x":{"field":"age_int","type":"ordinal","axis":{"grid":false,"title":"","ticks":false,"values":[]}},"y":{"field":"avHcoho","type":"quantitative","scale":{"zero":false},"axis":{"title":""}},"color":{"field":"cohort","type":"nominal","legend":null,"scale":{"domain":["1855-1880","1830-1854","1805-1829","1780-1804"],"range":["#014636","#3690C0","#A6BDDB","#D0D1E6"]}},"column":{"field":"rcodefa","type":"nominal","sort":["Professional / Higher managerial","Intermediate managerial","Skilled non manual","Skilled manual","Semi-skilled","Unskilled","Landed farmer","Skilled/semi skilled agriculture"],"header":{"title":"","labelAngle":352,"labelFontSize":8}}},"transform":[{"filter":{"selection":"brush"}},{"filter":{"selection":"legendSel"}},{"window":[{"as":"avHcoho","op":"mean","field":"hiscam_age"}],"frame":[null,null],"groupby":["cohort","rcodefa","age_int"]}],"title":"The Effect of Father's Occupation on an Individuals Career"}]}</span></p></div></div>
+<div class="insights" ns-role="label" ns-label-name="insights" ns-label-kind="paired"><h2 ns-role="label-child">Insights</h2><span class="annotation" ns-role="label-child">What has your visualization allowed you to discover about your data that help you answer your research question(s)?</span>
+<p>Though I did not considered the spatial variation of occupations over the UK at the beginning, I decided to include it in the visualization. In this way, now I am able to compare the evolution of the occupational structure and the development of individual careers between specific regions. It also allows me to see that the data used seems to be representative of the whole of the UK. Something I had not explore before.</p>
+<p>If we have a look at the whole dataset, some interesting patterns emerge. First, the map shows that ocupations related to industry are concentrated around urban areas, such as London or Manchester. It is also possible to notice that, further in the past, the number of occupations related to agriculture (i.e. Agricultural Laborer, Skilled / semi - skilled agriculture laborer, landed farmer ) were larger, around 40%, and that over the years they decreased rapidly. Is important to note that the change does not look that drastic cause we are looking at occupations of individuals born between large periods of time (cohorts), therefore the larger difference at the beginning of the 1780s produced by industrialization are not that salient. Nonetheless, the message is the same, a persistent decrease of agricultural occupations giving space to the rise of industry related jobs. Furthermore, we can have a look at the number of records per occupation over cohorts. this tell us something about the data: further in the past the less observations we have. Probably, any inference that we make from older data (the first cohort) should be done with precaution, specially if we select a region in the map and we see that the number of observations for certain occupations are too low.</p>
+<p>The next vis allows us to answer whether individuals careers became more succesful or not over the years. As the graph shows, in average, people started their careers at a lower occupational status in the past, and, even though they achieve higher status over their life course, the differences between cohorts remained. This means that british men's career did become more 'succesful' over the years. Understanding succesful, as achieving jobs of higher status as measured by the HISCAM scale.</p>
+<p>The final vis tells us about how the influence of the father's occupation exerts a life long effect on the occupational status achieved by their sons. The occupation of the father is ordered from highest occupational status (Professional / Higher managerial: 89.6) to lowest (Agricultural farmer: 37.4). Actually, the only exception is Lander Farmer, which should have been between Skilled-manual and Semi-skilled, I'll justify this decision in the next section. The vis shows that this influence is very determinant, not only in older cohorts but in all of them. We can select just one or a couple of cohorts to compare. If we select the oldest (1780-1804) and the newest (1855-1880) is easier to see the differences over time. For the case of Professional / Higher Managerial, is noteworthy to mention that the 1855-1880 cohort start their careers at a lower HISCAM status than the 1780-1804 cohort. This could be argue as evidence of British society becoming more open, since in the past, only people of higher social background could enter the higher status jobs. Also worth mentioning, is the difference between cohorts for Skilled-semi skilled agriculture. In the 1855-1880 son's of Skilled-semi skilled agriculture fathers achieved a much higher occupational status than people with similar social background in the past. Nonetheless, for other cases, such as the higher status obtained by agricultural labourers as time passed by, is difficult to tell if the difference is due to the decreasing effect of father's occupational status on an individual's career, or just because of the occupational structure upgrading of the UK.</p>
+<p>Having said that, is not necessarily the case that this differences hold for different regions in the UK. Maybe some of them are more 'open'. We could start exploring this by selecting different regions from the map, and see how the visualizations change. If we do that, and select regions corresponding to Scotland, we see that there is a lot more variance between individual's career depending on theirs father occupation. Suggesting that Scotland is and it has been more open than England. But it is also possible to note that their are far less occupational records, and that for some occupations, the numbers are too low, making the time series more squiggly. In this case, it would have been probably better to have merge similar occupations together, in order to avoid problems like this. Even better, would have been to allow the user to change the level of aggregation by themselves, enabling them 'to inspect the dataset at different levels of detail' (Munzner, 2014, p.305). Another option would have been to make the region selection less flexible by narrowing down the regions that could be selected, ensuring enough number of observations for each of them.</p>
+</div>
+<div class="designJustification" ns-role="label" ns-label-name="designJustification" ns-label-kind="paired"><h2 ns-role="label-child">Design Justification</h2><span class="annotation" ns-role="label-child">Why have you designed your visualizations this way? Consider design approaches (e.g. session 2) and your use of visual variables (channels), layout and interaction.</span>
+<h3 class="mume-header" id="color">Color</h3>
+
+<p>The vis is divided in two main parts, part I corresponds to the larger picture, composed by the UK's Occupational Map, The Proportion of Occupations over Cohorts and the Occupational Measurements over Cohorts charts. All three charts share the same color encoding as all of them are visualizing the same variable, the occupations recorded for individuals at any point in time. As seen in the previous table, the categories of this variable follow an order based on two conditions, the type of occupation, being linked to industry or agriculture, and the HISCAM score given to them. That is, within each occupation type (industry and agriculture) occupations are sorted in descending order from the highest occupation to the lowest. Also, to make more clear the distinction between industry related and agriculture types, I assigned a distinctive hue to each, a palette with different values of blue  for industry and a palette with different values of red for agriculture. To enforce that their is an order from highest to lowest occupation, I also made the scale divergent, from the darkest blue value to the darkest red value. This progression suggests an ordered relationship (Stone, 2006).  This color scheme allows to clearly distinguish the most and least industrialized part of the UK from the map, and also allows to see the decline of agriculture over time in the other two charts.</p>
+<p>Part II of the vis, corresponds to a more detail view of the data. Here, I take a look at the changes in an individuals career over time. First, we have a look at the difference between cohorts, and later, we see the difference between cohorts but faceted by the occupation of the father. In the first chart, each cohort is encoded with a different colour, and the legends are ordered following the actual display of the data on the graph, that is, the legends are ordered from the most recent cohort to the latest, as the lines represented in the graph followed the same order. I actually did specified another colour scheme from what is showned, but for some reason it does not work and uses the same colours of the first part of the data vis. I think that having two different color scales is the best option, to avoid confusion with the categories of occupations.</p>
+<h3 class="mume-header" id="interaction">Interaction</h3>
+
+<p>There are only two ways of interacting with the data vis, both  consists of filtering, and they are use to enable the user to 'explore' the dataset (Munzner, 2014, p. 301). The first one is through the map, which allows to select an arbitrary region. Within that region, every occupational measurement in the dataset is selected and the rest of the graphs get updated automatically. Therefore, the map shows every occupation irrespective of the cohort to which they belong. Is the broader picture of the data. The following graphs depict different dimensions of that selection.</p>
+<p>The second element of interaction lies within the second part of the data vis. Here, we can select one or multiple cohorts, which allows us to compare the evolution of individual careers during their life course and between cohorts. This is probably the most important part of the data vis, as is the one that answers the research questions proposed at the beginning. When considering all cohorts, both charts, but especially the one faceted by father's occupation can get cluttered, making it harder to do comparison between cohorts. Being able to select just a pair of them makes the task much easier. It also gives choices to the data vis user, and allows him to arrive to their own conclusions.</p>
+<h3 class="mume-header" id="layout">Layout</h3>
+
+<p>Considering the layout of all views, my main concern when building my data vis, was to arrange the multiple views in a way that all of them were visible at a glance, not needing to scroll up or down with the mouse. So, whenever the user selects an area inside the UK map, he can see how the rest of the coordinated views update automatically. According to this characteristics, this data vis could be considered as a dashboard, 'a visual display of data used to monitor conditions and/or facilitate understanding (Wexler et al. 2017 in Sarikaya et al. 2019)' with an specific purpose of communciation instead of the more traditional use of monitoring or decision making (Sarikaya et al. 2019).</p>
+<p>Basically, the data vis consists of a juxtapostion of simple visualizations with certain jerarchy between them in terms of interactivty. The map brush selection affects all views, while the cohort selection just affects those graphs in which cohorts are encoded using the color channel.</p>
+<p>Another concern was to have a high data-ink ratio. Since the vis has quite a few graphs in it, I tried to reduce redundant information by, in some cases, include in the title of the graph enough information to allow the user to infer what the Y axis of each graph was. I also created separate independent legends for each color encoding that were shared by several graphs as to having only one for each (occupations legend and cohorts legend). Finally, if a type of graph was repeated, most of its non data ink was removed.</p>
+<p>According to Yau (2011, p.161) a nice way of showing proportions over time is to use a stacked area chart, though for reasons describe in the Graphical integrity section, I decided to use a bar mark instead, with stacked bars for each occupation within each cohort. In this way, 'each component of the bar is separately stacked, so that the full bar height shows the value for the combination of all items in the stack'(Munzner, 2014, p. 151). Comparison between cohorts is easy to make because they share share the same Y axis. The Proportion of Occupations over Cohorts and Occupational Measurements over Cohorts charts follows this design. I decided to include both because they show different sides of the same coin. The first allow us to see clearly how the proportion of occupations have change over time, while the second shows us how the number of occupational measurements available over cohorts change. In this way, it gives information not only about what I try to depict with the data (the changes in occupational structure) but properties of the data itself. To save space, and avoid redundancy, I situated one chart on top of the other, so they can share the same X axis ticks and labels.</p>
+<p>The second part of the graph also consists of a chart that provides an overview of the data, the 'Difference in occupational status over the life course between cohorts' which has all of the neccesarily visual cues to understand it: the x and y axis ticks, labels, and title. And also an interactive legend which allows to select multiple cohorts to make some comparisons easier. On the otheer hand, the second graph is the same chart as before but using father's occupation as a column channel. This permits us to explore how the effect of father's occupation on an individual's career remains as an important factor but also how it varies over time.</p>
+<p>I decided to keep all of the juxtaposed graphs in the same row and to keep the order of occupations used in the graphs in part I, but since I was faceting according to columns, the order was from left to right instead of from top to bottom. Hence, comparison was faciliated by order and alignement (Meulemans et al., 2017). And since they are small multiples of the previous chart, I find no need to clutter the vis with its x and y axis labels, as I assume, the user can deduct they are the same. This also goes in line with Edward's Tufte data-ink ratio principle (Tufte, 2001 ). I could have increase more the data-ink ratio if I had faceted the data not only by occupation of the father, but also by cohort. This would have allowed me to follow the color encoding of occupations, making unnecesary its labelling. It would have looked like this:</p>
+<p><img src="./Figures/minimalist_facet.png" alt="Third Iteration2"></p>
+<p>The problem with it, is that it would have made more difficult to compare the changes between cohorts. For this reason, I kept the final design.</p>
+<h3 class="mume-header" id="graphical-integrity">Graphical integrity</h3>
+
+<p>In a previous version I had used an area mark for encoding the graphs on the evolution of  occupational measurement over time (right chart), but I eventually decided that the stacked area chart did not fullfil the requirement of data integrity, as it made the wrong impression that the variable in the position x, cohort, was a quantitative variable, with several several measurements between ticks. In reality it was just ordinal, hence, using a stacked bar chart (left plot) is a more accurate depiction of the data, as it makes it clear that there are only four measurements.</p>
+<p><img src="./Figures/area_stackedbar.png" alt="stackedbar_vs_stackedarea"></p>
+<p>Even though, I do not think the same applied for the chart on the evolution of proportions per occupation over time, I  applied the same design choice as, according to Tufte (2001), is important to make emphasis in data variation, not in design variation.</p>
+<p>Graphical integrity was somewhat left as a second priority when bulding the time series graphs. The first priority was to keep all charts viewable without scrolling, and each chart was reduced in size to comply with that priority. This may have skewed the visualizations, for example, by making the differences between cohorts seem smaller in the first times series graph than in the small multiple graphs, since the width versus height ratio are not the same.</p>
+</div>
+<div class="validation" ns-role="label" ns-label-name="validation" ns-label-kind="paired"><h2 ns-role="label-child">Validation</h2><span class="annotation" ns-role="label-child">Evaluate the degree to which your visualization has helped to answer your research questions. What are the strengths and limitations of your design in answering your questions? What might you do differently if you were to do this exercise again?</span>
+<p>Here, I would like to share some of my initial visualizations when trying to make sense of this data. These explorations were done with ggplot2 in R because it was faster for me than doing them in Litvis.</p>
+<p>My first idea was to do a data visualization similar to the one that was presented to us in Session 06, the one on the progress of individual riders in the 2015 Paris-Brest-Paris competition.</p>
+<p><img src="./Figures/paris-brest.png" alt="Paris-Brest-Paris"></p>
+<p>I thought it could be possible since I had data on the progression of a person's career over their lifetime. But when I tried to visualize the data without any transformation I achieved this:</p>
+<p><img src="./Figures/individual_careers_no_average.png" alt="First Iteration"></p>
+<p>Many individuals have too little data points, in some cases only one occupational measurement. So I decided to create five age intervals so every individual shared at least the same values for the x axis, and calculated the average HISCAM score for each individual for each age interval.</p>
+<p><img src="./Figures/individual_careers.png" alt="Second Iteration"></p>
+<p>It looked a lot better, so I thought that maybe I would see differences between careers if I graphed each individual line by the occupation of the father:</p>
+<p><img src="./Figures/individual_careers_faceted_father.png" alt="Second Iteration2"></p>
+<p>You could see something now, but it was not still clear enough for me. So I just decided to take the average of all individuals at each age interval instead of trying to infer certain trends from considering every career.</p>
+<p><img src="./Figures/average_hiscam_father.png" alt="Third Iteration2"></p>
+<p>This was a lot easier to interpret, and was finally the design and data transformation I applied to my visualization. This approach was also used to understand the changes between cohorts.</p>
+<p>In this sense one of the limitations of my data vis, is that it does not allow to zoom into the individual differences between careers, it just shows averages. This has the advantadge that makes the visualizations easier to interpret as the underlying data has also become more simpler. But it hides all the variation that lies within the data. Nevertheless, its enough to answer the research questions in a straightforward way.</p>
+<p>Another issue, is that I was unable to add a layer with the actual map of the UK in the background, this would give more context and make it easier to identifify the main cities to people who are not familiar with its geogrpahy.</p>
+<p>To improve my data vis, I could include the option to disaggregate the data through user interaction. I would also need to create an specific chart for visualizing the more complex data. Furthermore, I could have used median instead of mean for summarizing the data, as is less prone to be affected by outliers.</p>
+<p>Another route I could take, would be to enhance the ability to compare between regions. As one of the main problems with my vis, is that it does not allow to compare different regions at the same time. Every time you draw a new selection in the map you loose your previous selection. An easy way to solve this issue would just repeat the same visualization next to the previous one. By filtering a region in one of them and another in the next one, comparison between two regions would be possible. Another option, would be to create the regions to select before hand, and make small multiples of the existing charts but for each region.</p>
+<p>In conclusion, the developed data visualization allows to answer the research questions, but it could still be improve the ability to explore the complete dataset, not only the aggregated results. Also, improvements with respect to region comparison are needed.</p>
+</div>
+<div class="references" ns-role="label" ns-label-name="references" ns-label-kind="paired"><hr ns-role="label-child"><h3 ns-role="label-child">References</h3><span class="annotation" ns-role="label-child">Add references from literature that you have used to support your design justification.</span>
+<p><strong>Meulemans, W., Dykes, J., Slingsby, A., Turkay, C. &amp; Wood, J.</strong> (2017). Small<br>
+Multiples with Gaps. IEEE Transactions on Visualization and Computer Graphics, 23(1), pp.<br>
+381-390.</p>
+<p><strong>Montt, C., &amp; Maas, I.</strong> (2015). The openness of Britain during industrialisation. Determinants of career success of British men born between 1780 and 1880. Research in Social Stratification and Mobility, 42, 123-135.</p>
+<p><strong>Munzner, T.</strong> (2014). Visualization analysis and design. AK Peters/CRC Press.</p>
+<p><strong>Pooley, C. G., &amp; Turnbull, J.</strong> (1996). Migration and mobility in Britain from the eighteenth to the twentieth century. Local Population Studies, 57, 50–71.</p>
+<p><strong>Sarikaya, A., Correll, M., Bartram, L., Tory, M. and Fisher, D.</strong> (2019) What do we talk about when we talk about<br>
+dashboards? IEEE Transactions on Visualization and Computer Graphics, 25(1) pp. 682-692.</p>
+<p><strong>Stone, M.</strong> (2006) Choosing Colors for Data Visualization, Perceptual Edge.</p>
+<p><strong>Tufte, E. R.</strong> (2001). The visual display of quantitative information (Vol. 2). Cheshire, CT: Graphics press.</p>
+<p><strong>Van Leeuwen, M. H. D., Maas, I., &amp; Miles, A.</strong> (2004). Creating a historical International standard classification of occupations: An exercise in multinational interdisciplinary cooperation. Historical Methods: A Journal of Quantitative and Interdisciplinary History, 37, 186–197.</p>
+<p><strong>Yau, N. (2011).</strong> Visualize this: the FlowingData guide to design, visualization, and statistics. John Wiley &amp; Sons.</p>
+</div>
+
+      </div>
+      
+      
+    </body>
+    
+    
+    
+    <script>
+      var vegaEls = document.querySelectorAll('.vega, .vega-lite');
+      function reportVegaError(el, error) {
+        el.innerHTML = '<pre class="language-text">' + error.toString() + '</pre>'
+      }
+      for (var i = 0; i < vegaEls.length; i++) {
+        const vegaEl = vegaEls[i]
+        try {
+          var spec = JSON.parse(vegaEl.textContent);
+          vegaEmbed(vegaEl, spec, { actions: false, renderer: 'svg' })
+          .catch(function(error) {
+            reportVegaError(vegaEl, error);
+          })
+        } catch (error) {
+          reportVegaError(vegaEl, error);
+        }
+      }
+      </script>
+    
+    
+    
+  </html>
