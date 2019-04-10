@@ -44,7 +44,7 @@ unique_dirs <- unique(careers$to_geocode)
 #write_csv(dirs_geo, "dirs_geo.csv")
 
 # load geocoded dirs
-dirs <- read_csv("dirs_geo.csv")
+dirs <- read_csv("./data/dirs_geo.csv")
 
 dirs_df <- as_tibble(cbind(unique_dirs, dirs))
 
@@ -75,7 +75,7 @@ careers <- careers %>%
     yearocc %in% 1931:1955 ~ "1931"
   )) %>% na.omit()
 
-source("labelOcc.R")
+source("./R/labelOcc.R")
 
 # filter out domestic service and army
 careers <- careers %>% filter(occ >= 1 & occ <= 9)
