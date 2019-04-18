@@ -63,6 +63,7 @@ careers <- careers %>%
         dplyr::select(namenumber:nyearocc, agesmov:children, lon,lat)
 
 
+# create twenty years intervals
 careers <- careers %>%
   mutate(twenty_years=case_when(
     yearocc %in% 1791:1810 ~ "1791", # see graph 1791:1804 the decline is steeper
@@ -91,7 +92,6 @@ careers <- labelOcc(careers, "occ", "occ")
 #recode occupation father
 careers <- labelOcc(careers, "codefa", "rcodefa")
 
-#careers <- careers %>% dplyr::select(-var)
 
 # create age intervals------------------------------------------------------
 # too few individuals with observations after 60 years old, filter them out
@@ -112,8 +112,6 @@ careers <- careers %>%
                                       ifelse(yearbi >= 1830 & yearbi <= 1854, "1830-1854",
                                              ifelse(yearbi >= 1855 & yearbi <= 1880, "1855-1880", NA)))))
 
-
-#careers$age_int <- as.numeric(as.factor(careers$age_int))
 
 # Calculate average hiscma per age group by person
 careers <- careers %>% dplyr::group_by(namenumber, age_int) %>% 

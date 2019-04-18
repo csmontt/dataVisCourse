@@ -164,7 +164,7 @@ interactiveLegend field selName =
     asSpec [ sel [], enc [], square [ maSize 120, maOpacity 1 ] ]
 ```
 
-```elm {v l=hidden interactive}
+```elm {v  interactive}
 mapOccs3 : Spec
 mapOccs3 =
 
@@ -214,7 +214,7 @@ mapOccs3 =
                      , title "UK's occupational map (brush a selection)"
                      ]
 
--- faceted by cohort
+
         encDetailArea =
              encoding
                  << position Y
@@ -487,8 +487,7 @@ In conclusion, the developed data visualization allows to answer the research qu
 {(references|}
 
 
-**Meulemans, W., Dykes, J., Slingsby, A., Turkay, C. & Wood, J.** (2017). Small
-Multiples with Gaps. IEEE Transactions on Visualization and Computer Graphics, 23(1), pp.
+**Meulemans, W., Dykes, J., Slingsby, A., Turkay, C. & Wood, J.** (2017). Small Multiples with Gaps. IEEE Transactions on Visualization and Computer Graphics, 23(1), pp.
 381-390.
 
 **Montt, C., & Maas, I.** (2015). The openness of Britain during industrialisation. Determinants of career success of British men born between 1780 and 1880. Research in Social Stratification and Mobility, 42, 123-135.

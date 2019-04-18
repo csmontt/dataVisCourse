@@ -1,11 +1,10 @@
 #' Label occupations in Pooley´s dataset
 #'
 #' Just works for pooley's data on codefa and occ varaibles
-#' @param df nombre dataframe (dataframe)
-#' @param variable variable a recodificar (character)
-#' @param newvar nombre nueva varaible recodificada(character)
-#' @return df con variable recodificada
-#' obtenido
+#' @param df name of dataframe (dataframe)
+#' @param variable variable to recode (character)
+#' @param newvar name of new recoded variable (character)
+#' @return df with recoded variables
 #' @export
 
 # read https://stackoverflow.com/questions/2641653/pass-a-data-frame-column-name-to-a-function
