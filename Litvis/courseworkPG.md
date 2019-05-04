@@ -83,18 +83,6 @@ cohoColors =
                ( "1780-1804", "#D0D1E6" )]
 
 
-transOrd =
-  transform
-    << calculateAs """if(datum.rcodefa == 'Professional / Higher managerial', 8,
-                        if(datum.rcodefa == 'Intermediate managerial', 7,
-                        if(datum.rcodefa == 'Skilled non manual', 6,
-                        if(datum.rcodefa == 'Skilled manual', 5,
-                        if(datum.rcodefa == 'Semi-skilled', 4,
-                        if(datum.rcodefa == 'Unskilled', 3,
-                        if(datum.rcodefa == 'Landed farmer', 2,
-                        if(datum.rcodefa == 'Skilled/semi skilled agriculture', 1, 0))))))))"""
-                        "codefaOrder"
-
 occData =
    dataFromUrl "https://raw.githubusercontent.com/csmontt/dataVisCourse/master/data/courseworkData.csv"
 
@@ -474,11 +462,13 @@ In this sense one of the limitations of my data vis, is that it does not allow t
 
 Another issue, is that I was unable to add a layer with the actual map of the UK in the background, this would give more context and make it easier to identifify the main cities to people who are not familiar with its geogrpahy.
 
+An issue regarding interaction, is that the visualization takes a couple of seconds to update when an area in the map is selected. In some cases, it even freezes, redering the visualization useless. This is probably due the thousands of points the brush selection needs to filter, task that could have been avoided by aggregating nearby occupational measurements of the same class into a single point representing an arbitrary number of observations.
+
 To improve my data vis, I could include the option to disaggregate the data through user interaction. I would also need to create an specific chart for visualizing the more complex data. Furthermore, I could have used median instead of mean for summarizing the data, as is less prone to be affected by outliers.
 
 Another route I could take, would be to enhance the ability to compare between regions. As one of the main problems with my vis, is that it does not allow to compare different regions at the same time. Every time you draw a new selection in the map you loose your previous selection. An easy way to solve this issue would just repeat the same visualization next to the previous one. By filtering a region in one of them and another in the next one, comparison between two regions would be possible. Another option, would be to create the regions to select before hand, and make small multiples of the existing charts but for each region.
 
-In conclusion, the developed data visualization allows to answer the research questions, but it could still be improve the ability to explore the complete dataset, not only the aggregated results. Also, improvements with respect to region comparison are needed.
+In conclusion, the developed data visualization allows to answer the research questions, but it could still be improve the ability to explore the complete dataset, not only the aggregated results. Also, improvements with respect to region comparison could be included.
 
 
 
